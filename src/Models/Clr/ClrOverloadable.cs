@@ -67,8 +67,8 @@ namespace Document.Generator.Models
             }
 
             output.Header(1, SharedTitle);
-            WriteOverloadsSummary(output, context);
             WriteInfoBox(output, context);
+            WriteOverloadsSummary(output, context);
 
             output.Table(new[] { "Overload", "Description" }, Overloads,
                 overload => overload.WriteLink(output, context),
@@ -99,7 +99,7 @@ namespace Document.Generator.Models
                 if (doc.Summaries.Any())
                     output.Xml(doc.Summaries);
                 else
-                    output.Xml(doc);
+                    output.Section(() => output.Xml(doc));
             }
         }
     }
