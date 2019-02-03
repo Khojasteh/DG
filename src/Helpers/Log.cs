@@ -8,27 +8,32 @@ namespace Document.Generator.Helpers
     {
         private static readonly HashSet<string> MissingDocs = new HashSet<string>();
 
+        private static void Write(TraceEventType type, string message)
+        {
+            Console.WriteLine($"dg: {type} -> {message}");
+        }
+
         public static void Error(Exception error)
         {
-            Trace.TraceError(error.GetBaseException().Message);
+            Write(TraceEventType.Error, error.GetBaseException().Message);
         }
 
         public static void WarnMisisngDoc(ICRef target)
         {
             if (MissingDocs.Add(target.CRef))
-                Trace.TraceWarning($"{Utils.FormatCRef(target.CRef)} has no documentation");
+                Write(TraceEventType.Warning, $"{Utils.FormatCRef(target.CRef)} has no documentation");
         }
 
         public static void WarnMisisngTypeParameterDoc(ICRef target, string typeParameterName)
         {
             if (!MissingDocs.Contains(target.CRef) && MissingDocs.Add(target.CRef + '*' + typeParameterName))
-                Trace.TraceWarning($"Type parameter '{typeParameterName}' of {Utils.FormatCRef(target.CRef)} has no documentation");
+                Write(TraceEventType.Warning, $"Type parameter '{typeParameterName}' of {Utils.FormatCRef(target.CRef)} has no documentation");
         }
 
         public static void WarnMisisngParameterDoc(ICRef target, string parameterName)
         {
             if (!MissingDocs.Contains(target.CRef) && MissingDocs.Add(target.CRef + '^' + parameterName))
-                Trace.TraceWarning($"Parameter '{parameterName}' of {Utils.FormatCRef(target.CRef)} has no documentation");
+                Write(TraceEventType.Warning, $"Parameter '{parameterName}' of {Utils.FormatCRef(target.CRef)} has no documentation");
         }
 
         public static void WarnMisisngReturnDoc(ICRef target)
