@@ -1,6 +1,7 @@
 ﻿using Document.Generator.Formatters;
 using Document.Generator.Helpers;
 using Document.Generator.Languages;
+using Document.Generator.Models.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,9 +97,32 @@ namespace Document.Generator.Models.Clr
             var doc = context.Document.Of(this);
 
             output.Header(level, "Type Parameters");
-            output.DefinitionList(typeParameters, 
+            output.DefinitionList(typeParameters,
                 typeParameter => output.Text(typeParameter.Name, TextStyles.Teletype),
-                typeParameter => output.Section(() => doc?.TypeParameters.For(typeParameter.Name, output.Xml, name => Log.WarnMisisngTypeParameterDoc(this, name))));
+                typeParameter => output.Section(() => 
+                {
+                    if (WriteTypeParamDoc(doc, typeParameter.Name))
+                        return;
+
+                    for (var parent = Owner; parent != null; parent = parent.Owner)
+                    {
+                        if (WriteTypeParamDoc(context.Document.Of(parent), typeParameter.Name))
+                            return;
+                    }
+
+                    Log.WarnMisisngTypeParameterDoc(this, typeParameter.Name);
+                }));
+
+            bool WriteTypeParamDoc(XmlMember ownerDoc, string paramName)
+            {
+                if (ownerDoc != null && ownerDoc.TypeParameters.TryGetValue(paramName, out var paramDoc))
+                {
+                    output.Xml(paramDoc);
+                    return true;
+                }
+
+                return false;
+            }
         }
 
         public virtual void WriteParametersSection(int level, DocumentFormatter output, OutputContext context, IEnumerable<ParameterInfo> parameters)

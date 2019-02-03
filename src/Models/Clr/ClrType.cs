@@ -49,7 +49,7 @@ namespace Document.Generator.Models.Clr
         public override void WriteDetails(int level, DocumentFormatter output, OutputContext context)
         {
             if (Info.IsGenericType)
-                WriteTypeParametersSection(level + 1, output, context, Info.GenericTypeArguments.Where(arg => arg.IsGenericTypeParameter));
+                WriteTypeParametersSection(level + 1, output, context, Info.GetGenericArguments());
 
             WriteMembers(level, output, context);
 
