@@ -104,10 +104,13 @@ namespace Document.Generator.Models.Clr
                     if (WriteTypeParamDoc(doc, typeParameter.Name))
                         return;
 
-                    for (var parent = Owner; parent != null; parent = parent.Owner)
+                    if (!typeParameter.IsGenericMethodParameter)
                     {
-                        if (WriteTypeParamDoc(context.Document.Of(parent), typeParameter.Name))
-                            return;
+                        for (var parent = Owner; parent != null; parent = parent.Owner)
+                        {
+                            if (WriteTypeParamDoc(context.Document.Of(parent), typeParameter.Name))
+                                return;
+                        }
                     }
 
                     Log.WarnMisisngTypeParameterDoc(this, typeParameter.Name);
