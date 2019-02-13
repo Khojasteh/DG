@@ -10,6 +10,7 @@ namespace Document.Generator.Formatters
     public class MarkdownFormatter : DocumentFormatter
     {
         private static readonly Regex EscapePattern = new Regex(@"[\\`\*_\{\}#<\-]+|(?<=\])\(", RegexOptions.Compiled);
+        private static readonly Regex UrlHashCleanupPattern = new Regex(@"[^a-z0-9\-]", RegexOptions.Compiled);
 
         private int emittedLineBreaks = int.MaxValue;
 
@@ -23,7 +24,19 @@ namespace Document.Generator.Formatters
 
         protected override string EscapeUrl(string url)
         {
+            var i = url.IndexOf('#');
+            if (i != -1 && !url.Contains(':'))
+            {
+                return url.Substring(0, i) + '#' + CleanHash(url.Substring(i + 1));
+            }
+
             return url;
+
+            string CleanHash(string hash)
+            {
+                return UrlHashCleanupPattern.Replace(Uri.UnescapeDataString(hash).ToLowerInvariant(), 
+                    m => (m.Value == " ") ? "-" : string.Empty);
+            }
         }
 
         protected override void RawText(string text)
