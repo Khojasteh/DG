@@ -19,6 +19,8 @@ namespace Document.Generator.Models.Clr
             Namespaces = assembly.ExportedTypes.GroupBy(type => type.Namespace, (ns, types) => new ClrNamespace(this, ns, types));
         }
 
+        public virtual string DocFile { get; set; }
+
         public override string Name { get; }
 
         public Version Version { get; }
@@ -39,7 +41,7 @@ namespace Document.Generator.Models.Clr
 
         public override string GetDocFile(OutputContext context)
         {
-            return context.ToFileName("_toc." + Name);
+            return context.ToFileName(DocFile ?? $"_toc.{Name}");
         }
 
         public override void WriteSummaryLine(DocumentFormatter output, OutputContext context)

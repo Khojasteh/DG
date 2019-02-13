@@ -40,8 +40,8 @@ namespace Document.Generator
                     var input = InputContext.Create(assemblyFile);
                     foreach (var format in settings.OutputFormats)
                     {
-                        var outputFolder = Path.Combine(settings.OutputFolder, format.Subfolder);
-                        var output = new OutputContext(input, format, settings.Language, outputFolder);
+                        var outputFolder = settings.FlattenFolder ? settings.OutputFolder : Path.Combine(settings.OutputFolder, format.Subfolder);
+                        var output = new OutputContext(input, format, settings.Language, outputFolder, settings.IndexName);
                         output.Compose();
                     }
                 }

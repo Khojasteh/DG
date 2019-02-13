@@ -10,6 +10,10 @@ namespace Document.Generator.Config
 
         public string OutputFolder { get; set; } = "./";
 
+        public bool FlattenFolder { get; set; } = false;
+
+        public string IndexName { get; set; } = null;
+
         public Language Language => CSharp.Instance;
 
         public MarkdownOptions Markdown { get; set; } = new MarkdownOptions { Enabled = true };

@@ -17,12 +17,14 @@ namespace Document.Generator.Config
                 "Usage: dg [OPTIONS] <path-to-assembly>+",
                 "",
                 "Options:",
-                { "m|markdown",   "Generates documents in markdown (default)",   md => Markdown.Enabled = (md != null) },
-                { "x|html",       "Generates documents in HTML",                 html => Html.Enabled = (html != null) },
-                { "s|style=",     "Custom stylesheet URL of HTML documents",     style => Html.Stylesheet = style },
-                { "d|outdir=",    "Base output directory (default cwd)",         folder => OutputFolder = Path.GetFullPath(folder) },
-                { "h|help",       "Shows this message and exits",                help => showUsage = (help != null) },
-                { "<>",           "Path to assembly file",                       assembly => AssemblyFiles.Add(Path.GetFullPath(assembly)) },
+                { "m|markdown",  "Generates documents in markdown (default)",      md => Markdown.Enabled = (md != null) },
+                { "x|html",      "Generates documents in HTML",                    html => Html.Enabled = (html != null) },
+                { "s|style=",    "Custom stylesheet URL of HTML documents",        style => Html.Stylesheet = style },
+                { "i|index=",    "Index document name (default _toc.<assembly>)",  index => IndexName = index },
+                { "d|outdir=",   "Base output directory (default cwd)",            folder => OutputFolder = Path.GetFullPath(folder) },
+                { "f|flat",      "All formats in one folder (default off)",        flat => FlattenFolder = (flat != null) },
+                { "h|help",      "Shows this message and exits",                   help => showUsage = (help != null) },
+                { "<>",          "Path to assembly file",                          assembly => AssemblyFiles.Add(Path.GetFullPath(assembly)) },
             };
         }
 

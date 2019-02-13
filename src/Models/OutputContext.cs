@@ -15,12 +15,13 @@ namespace Document.Generator.Models
 
         private readonly FormatOptions _formatOptions;
 
-        public OutputContext(InputContext inputContext, FormatOptions formatOptions, Language language, string outputPath)
+        public OutputContext(InputContext inputContext, FormatOptions formatOptions, Language language, string outputPath, string indexName = null)
             : base(inputContext?.Assembly, inputContext?.Document)
         {
             _formatOptions = formatOptions ?? throw new ArgumentNullException(nameof(formatOptions));
             Language = language ?? throw new ArgumentNullException(nameof(language));
             OutputPath = outputPath ?? throw new ArgumentNullException(nameof(outputPath));
+            Assembly.DocFile = indexName;
             formatOptions.Initialize(outputPath);
         }
 
