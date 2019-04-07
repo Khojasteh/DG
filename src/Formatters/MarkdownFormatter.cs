@@ -1,4 +1,8 @@
-﻿using Document.Generator.Helpers;
+﻿// Copyright (c) 2019 Kambiz Khojasteh
+// Released under the MIT software license, see the accompanying
+// file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
+
+using Document.Generator.Helpers;
 using Document.Generator.Models.Xml;
 using System;
 using System.Collections.Generic;
@@ -34,7 +38,7 @@ namespace Document.Generator.Formatters
 
             string CleanHash(string hash)
             {
-                return UrlHashCleanupPattern.Replace(Uri.UnescapeDataString(hash).ToLowerInvariant(), 
+                return UrlHashCleanupPattern.Replace(Uri.UnescapeDataString(hash).ToLowerInvariant(),
                     m => (m.Value == " ") ? "-" : string.Empty);
             }
         }

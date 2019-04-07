@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" 
+<!--
+Copyright (c) 2019 Kambiz Khojasteh
+Released under the MIT software license, see the accompanying
+file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
+-->
+<xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:sd="http://xmldoc.transform" exclude-result-prefixes="sd">
-  
+
   <xsl:output method="html" omit-xml-declaration="yes" indent="no" />
 
   <xsl:template match="text()[preceding-sibling::node() and following-sibling::node()]">

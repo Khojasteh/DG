@@ -1,4 +1,8 @@
-﻿using Document.Generator.Models.Clr;
+﻿// Copyright (c) 2019 Kambiz Khojasteh
+// Released under the MIT software license, see the accompanying
+// file LICENSE.txt or http://www.opensource.org/licenses/mit-license.php.
+
+using Document.Generator.Models.Clr;
 using Document.Generator.Models.Xml;
 using System;
 using System.IO;
